@@ -31,7 +31,7 @@ jobs:
       uses: actions/setup-java@v4
       with:
         distribution: 'zulu'
-        java-version: '21' # यहाँ जावा 21 कर दिया गया है ताकि कंपाइलेशन एरर न आए
+        java-version: '21'
 
     - name: Setup Android SDK
       uses: android-actions/setup-android@v3
@@ -41,6 +41,11 @@ jobs:
         npx cap init "Inkscape AI Storyteller" "com.takano3d.storyteller" --web-dir=dist || true
         npx cap add android || true
         npx cap sync
+
+    - name: Fix Kotlin Duplicate Classes (Gradle Constraint)
+      run: |
+        # यह स्क्रिप्ट build.gradle के अंदर डुप्लिकेट कोटलिन लाइब्रेरीज़ को रोकने के लिए कॉन्स्ट्रेंट जोड़ती है
+        sed -i '/dependencies {/a \    constraints {\n        implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.8.22") { because("Fix duplicate class error") }\n        implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.8.22") { because("Fix duplicate class error") }\n    }' android/app/build.gradle
 
     - name: Build Android APK (Debug)
       run: |
