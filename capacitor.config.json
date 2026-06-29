@@ -1,0 +1,6 @@
+{
+  "appId": "com.takano3d.storyteller",
+  "appName": "Inkscape AI Storyteller",
+  "webDir": "dist",
+  "bundledWebRuntime": false
+}
