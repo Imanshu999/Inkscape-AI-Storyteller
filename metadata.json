@@ -1,0 +1,8 @@
+{
+  "name": "Inkscape AI: Storyteller",
+  "description": "A creative writing interface that transforms images into immersive story openings with AI narration and an interactive world-building chatbot.",
+  "requestFramePermissions": [
+    "camera"
+  ],
+  "majorCapabilities": []
+}
