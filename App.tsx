@@ -1,4 +1,4 @@
-Import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { analyzeImageAndGhostwrite, generateSpeech, reviseStory, continueStory } from './services/gemini';
 import { decodeBase64, decodeAudioData } from './utils/audio';
 import { StoryState, Genre } from './types';
@@ -378,7 +378,10 @@ const App: React.FC = () => {
         </section>
       </main>
 
-      <ChatBot storyContext={state.paragraphs.join('\n\n')} />
+      {/* सुधार: चैटबॉट को केवल तब लोड करें जब कहानी में कम से कम एक पैराग्राफ जनरेट हो चुका हो */}
+      {state.paragraphs.length > 0 && (
+        <ChatBot storyContext={state.paragraphs.join('\n\n')} />
+      )}
 
       <div className="fixed top-0 left-0 w-full h-full -z-50 pointer-events-none opacity-[0.03]">
         <div className="absolute top-[10%] left-[5%] text-[20rem] font-serif">A</div>
