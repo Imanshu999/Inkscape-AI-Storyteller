@@ -26,9 +26,11 @@ jobs:
 
     - name: Build Web Application
       env:
-        VITE_GEMINI_API_KEY: ${{ secrets.VITE_GEMINI_API_KEY }}
+        SECRET_KEY: ${{ secrets.VITE_GEMINI_API_KEY }}
       run: |
-        echo "VITE_GEMINI_API_KEY=$VITE_GEMINI_API_KEY" > .env
+        # यहाँ दोनों वेरिएबल्स को .env फ़ाइल में लिखा जा रहा है ताकि कोई भी मिसमैच न हो
+        echo "VITE_GEMINI_API_KEY=$SECRET_KEY" > .env
+        echo "GEMINI_API_KEY=$SECRET_KEY" >> .env
         npm run build
 
     - name: Set up JDK 21
@@ -48,7 +50,6 @@ jobs:
 
     - name: Fix Kotlin Duplicate Classes (Gradle Constraint)
       run: |
-        # यह स्क्रिप्ट build.gradle के अंदर डुप्लिकेट कोटलिन लाइब्रेरीज़ को रोकने के लिए कॉन्स्ट्रेंट जोड़ती है
         sed -i '/dependencies {/a \    constraints {\n        implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.8.22") { because("Fix duplicate class error") }\n        implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.8.22") { because("Fix duplicate class error") }\n    }' android/app/build.gradle
 
     - name: Build Android APK (Debug)
